@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table#pistas {
+            width: 100%;
+            border: 1px solid black;
+        }
+
+        table#cabecalho{width: 100%}
+        
+        table#cabecalho td{
+               border: 2px solid rgb(223, 217, 217);
+
+        }
+
+        td#lugar1,td#lugar2,td#lugar3,td#lugar4,td#lugar5
+           {cursor: pointer;}
+        
+        table#cabecalho img{
+               width: 90px;
+               height: 30px;
+        }
+
+        td#pista1,td#pista2,td#pista3,td#pista4,td#pista5
+        { background-image: url(pista.png);height: 100px;}
+
+        td#titulo{text-align: center;font-size: 25px;font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;}
+        
+        img#carro1,
+        img#carro2,
+        img#carro3,
+        img#carro4,
+        img#carro5{width: 135px;height: 45px;}
+    </style>
+</head>
+<body>
+
+    <table id="pistas">
+        <tr>
+            <td>
+                <table id="cabecalho">
+                    <tr>
+                        <td id="titulo" colspan="7">Corrida Maluca</td>
+                    </tr>
+                    <tr>
+                            
+                        <td style="width: 10%;text-align: center;">
+                            <p><button id="btini" style="padding: 5px 20px;cursor: pointer;display: none;" onclick="iniciar()">Inicial</button></p>
+                        </td>
+
+                        <td id="botao" style="width: 15%;">
+                            <figure>
+                                <img id="selecionando" src="carro0.png">
+                                <figcaption id="labselect">Selecione seu carro.</figcaption>
+                            </figure>
+                            
+                        </td>
+                        <td id="lugar1" onclick="selecionar(1)">
+                            <figure>
+                                <img id="lugar1" src="carro1.png">
+                                <figcaption>Carro 1</figcaption>
+                            </figure>
+                        </td>
+                        <td id="lugar2" onclick="selecionar(2)">
+                            <figure>
+                                <img id="lugar2" src="carro2.png">
+                                <figcaption>Carro 2</figcaption>
+                            </figure>
+                        </td>
+                        <td id="lugar3" onclick="selecionar(3)">
+                            <figure>
+                                <img id="lugar3" src="carro3.png">
+                                <figcaption>Carro 3</figcaption>
+                            </figure>
+                        </td>
+                        <td id="lugar4" onclick="selecionar(4)">
+                            <figure>
+                                <img id="lugar4" src="carro4.png">
+                                <figcaption>Carro 4</figcaption>
+                            </figure>
+                        </td>
+                        <td id="lugar5" onclick="selecionar(5)">
+                            <figure>
+                                <img id="lugar5" src="carro5.png">
+                                <figcaption>Carro 5</figcaption>
+                            </figure>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td id="pista1">
+                <figure>
+                    <img id="carro1" src="carro1.png"> 
+                    <figcaption id="label1">Veloc.: 0km/h</figcaption>                    
+                </figure>                
+            </td>
+        </tr>
+        <tr>
+            <td id="pista2">
+                <figure>
+                    <img id="carro2" src="carro2.png"> 
+                    <figcaption id="label2">Veloc.: 0km/h</figcaption>                    
+                </figure>
+            </td>
+        </tr>
+        <tr>
+            <td id="pista3">
+                <figure>
+                    <img id="carro3" src="carro3.png"> 
+                    <figcaption id="label3">Veloc.: 0km/h</figcaption>                    
+                </figure>
+            </td>
+        </tr>
+        <tr>
+            <td id="pista4">
+                <figure>
+                    <img id="carro4" src="carro4.png"> 
+                    <figcaption id="label4">Veloc.: 0km/h</figcaption>                    
+                </figure>
+            </td>
+        </tr>
+        <tr>
+            <td id="pista5">
+                <figure>
+                    <img id="carro5" src="carro5.png"> 
+                    <figcaption id="label5">Veloc.: 0km/h</figcaption>                    
+                </figure>
+            </td>
+        </tr>
+    </table>
+
+    <script>
+        var cont = 1;
+        var interval;
+        var iniciado = false;
+        var carroselect;
+        var final = (parseInt(document.getElementById("pista1").clientWidth)-200);
+        var posicao1 = 1;
+        var posicao2 = 1;
+        var posicao3 = 1;
+        var posicao4 = 1;
+        var posicao5 = 1;
+        var veloc1 = 1;
+        var veloc2 = 1;
+        var veloc3 = 1;
+        var veloc4 = 1;
+        var veloc5 = 1;
+        var carro1 = document.getElementById("pista1");
+        var carro2 = document.getElementById("pista2");
+        var carro3 = document.getElementById("pista3");
+        var carro4 = document.getElementById("pista4");
+        var carro5 = document.getElementById("pista5");
+
+        carro1.style.paddingLeft = posicao1+"px";
+        carro2.style.paddingLeft = posicao2+"px";
+        carro3.style.paddingLeft = posicao3+"px";
+        carro4.style.paddingLeft = posicao4+"px";
+        carro5.style.paddingLeft = posicao5+"px";
+        
+        function resetarselect(){
+            document.getElementById("lugar1").style.border = "2px solid rgb(223, 217, 217)";
+            document.getElementById("lugar2").style.border = "2px solid rgb(223, 217, 217)";
+            document.getElementById("lugar3").style.border = "2px solid rgb(223, 217, 217)";
+            document.getElementById("lugar4").style.border = "2px solid rgb(223, 217, 217)";
+            document.getElementById("lugar5").style.border = "2px solid rgb(223, 217, 217)";
+        }
+
+        function selecionar(car){
+            
+            if(!iniciado){
+               resetarselect();
+            }             
+
+            if(car == 1 && !iniciado){
+                document.getElementById("lugar1").style.border = "2px solid red";
+                carroselect = 1;
+                document.getElementById("selecionando").src = "carro1.png";
+                document.getElementById("labselect").innerHTML = "Carro 1";
+                document.getElementById("btini").style.display = "inline";
+            }
+            
+            if(car == 2 && !iniciado){
+                document.getElementById("lugar2").style.border = "2px solid red";
+                carroselect = 2;
+                document.getElementById("selecionando").src = "carro2.png";
+                document.getElementById("labselect").innerHTML = "Carro 2";
+                document.getElementById("btini").style.display = "inline";
+            }
+            
+            if(car == 3 && !iniciado){
+                document.getElementById("lugar3").style.border = "2px solid red";
+                carroselect = 3;
+                document.getElementById("selecionando").src = "carro3.png";
+                document.getElementById("labselect").innerHTML = "Carro 3";
+                document.getElementById("btini").style.display = "inline";
+            }
+            
+            if(car == 4 && !iniciado){
+                document.getElementById("lugar4").style.border = "2px solid red";
+                carroselect = 4;
+                document.getElementById("selecionando").src = "carro4.png";
+                document.getElementById("labselect").innerHTML = "Carro 4";
+                document.getElementById("btini").style.display = "inline";
+            }
+            
+            if(car == 5 && !iniciado){
+                document.getElementById("lugar5").style.border = "2px solid red";
+                carroselect = 5;
+                document.getElementById("selecionando").src = "carro5.png";
+                document.getElementById("labselect").innerHTML = "Carro 5";
+                document.getElementById("btini").style.display = "inline";
+            }
+        }
+
+        function iniciar(){
+            interval = setInterval(corrida,500);
+            document.getElementById("btini").style.display = "none";
+            iniciado = true;
+        }
+
+        function CorridaTerminou(){
+            if(posicao1>=final){
+                clearInterval(interval);
+                document.getElementById("lugar1").style.background = "rgb(112, 255, 179)";
+            }
+
+            if(posicao2>=final){
+                clearInterval(interval);
+                document.getElementById("lugar2").style.background = "rgb(112, 255, 179)";
+            }
+            
+            if(posicao3>=final){
+                clearInterval(interval);
+                document.getElementById("lugar3").style.background = "rgb(112, 255, 179)";
+            }
+            
+            if(posicao4>=final){
+                clearInterval(interval);
+                document.getElementById("lugar4").style.background = "rgb(112, 255, 179)";
+            }
+            
+            if(posicao5>=final){
+                clearInterval(interval);
+                document.getElementById("lugar5").style.background = "rgb(112, 255, 179)";
+            }
+        }
+
+        function velocidade(){
+            veloc1 = Math.floor(Math.random() * (20 - 1)) + 1;
+            veloc2 = Math.floor(Math.random() * (20 - 1)) + 1;
+            veloc3 = Math.floor(Math.random() * (20 - 1)) + 1;
+            veloc4 = Math.floor(Math.random() * (20 - 1)) + 1;
+            veloc5 = Math.floor(Math.random() * (20 - 1)) + 1;
+
+            document.getElementById("label1").innerHTML = "Veloc.: "+veloc1+"0 km/h";
+            document.getElementById("label2").innerHTML = "Veloc.: "+veloc2+"0 km/h";
+            document.getElementById("label3").innerHTML = "Veloc.: "+veloc3+"0 km/h";
+            document.getElementById("label4").innerHTML = "Veloc.: "+veloc4+"0 km/h";
+            document.getElementById("label5").innerHTML = "Veloc.: "+veloc5+"0 km/h";
+        }
+
+        function corrida(){
+            posicao1 += veloc1;
+            posicao2 += veloc2;
+            posicao3 += veloc3;
+            posicao4 += veloc4;
+            posicao5 += veloc5;
+
+            carro1.style.paddingLeft = posicao1+"px";
+            carro2.style.paddingLeft = posicao2+"px";
+            carro3.style.paddingLeft = posicao3+"px";
+            carro4.style.paddingLeft = posicao4+"px";
+            carro5.style.paddingLeft = posicao5+"px";
+
+            CorridaTerminou();
+
+            if(cont==3){
+                velocidade();
+                cont=0;
+            }
+            cont++;
+        }
+    </script>
+</body>
+</html>
