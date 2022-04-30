@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>criarelemento</title>
+</head>
+<body id="corpo">
+    <h1>Adicionar Elemento</h1>
+    <p>Digite o texto: <input type="text" id="texto"></p>
+    <p><button onclick="aicionar()">Adicionar</button></p>
+    <script>
+        function Adicionar(){
+            var texto = document.getElementById("texto").value;
+            var para = document.createElement("p");
+            para.innerHTML = texto;
+            var corpo = document.getElementById("corpo");
+            corpo.appendChild(para);
+        }
+    </script>
+</body>
+</html>
